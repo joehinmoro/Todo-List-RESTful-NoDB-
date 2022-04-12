@@ -1,0 +1,22 @@
+{
+  "name": "restful_to_do",
+  "version": "1.0.0",
+  "description": "RESTful To-Do list app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "./git/"
+  },
+  "keywords": [
+    "rest",
+    "to-do"
+  ],
+  "author": "joehinmoro",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
