@@ -1,0 +1,20 @@
+<%- include("partials/head") %>
+<section class="container border border-light mt-3 p-2">
+    <h2>All ToDos</h2>
+    <div class="container">
+        <% for( let todo of todoList ) { %>
+        <div class="col mt-2">
+            <div class="card bg-dark text-light border-light">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"><p><%= todo.text %></p></div>
+                        <div class="col"><a href="" class="btn btn-outline-light">Info</a></div>
+                        <div class="col"><a href="" class="btn btn-outline-light">Done</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</section>
+<%- include("partials/foot") %>
