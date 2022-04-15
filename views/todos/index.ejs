@@ -7,9 +7,9 @@
             <div class="card bg-dark text-light border-light">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col"><p><%= todo.text %></p></div>
-                        <div class="col"><a href="" class="btn btn-outline-light">Info</a></div>
-                        <div class="col"><a href="" class="btn btn-outline-light">Done</a></div>
+                        <div class="col-auto me-auto"><p><%= todo.text %></p></div>
+                        <div class="col-auto"><a href="/todos/<%=todo._id%>" class="btn btn-outline-light">Info</a></div>
+                        <div class="col-auto"><a href="#" class="btn btn-outline-light">Done</a></div>
                     </div>
                 </div>
             </div>
