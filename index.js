@@ -33,7 +33,21 @@ app.post("/", (req, res) => {
 // index route (get)
 app.get("/todos", (req, res) => {
     // render the index view
-    res.render("todos/index", { title: "All ToDos", todoList });
+    res.render("todos/index", { title: "All ToDos", todoDB });
+});
+
+// show route (get)
+app.get("/todos/:_id", (req, res) => {
+    // destruct id from url
+    const { _id } = req.params;
+    // validate id
+    const todo = todoDB.find((todoObj) => todoObj._id === _id);
+    console.log(todo);
+    if (todo) {
+        res.render("todos/show", { title: todo.text, todo });
+    } else {
+        res.send("404 not found");
+    }
 });
 
 // start server and listen on port
@@ -43,12 +57,12 @@ app.listen(portNumber, () => {
     // console.log(randomUUID());
 });
 
-const todoList = [
+const todoDB = [
     {
         _id: randomUUID(),
         text: "Hello World",
         dateCreated: new Date(1649923181674),
-        dateUpdated: "",
+        dateUpdated: new Date(1649923191974),
     },
     {
         _id: randomUUID(),
@@ -58,4 +72,4 @@ const todoList = [
     },
 ];
 
-const deletedTodoList = [];
+const deletedtodoDB = [];

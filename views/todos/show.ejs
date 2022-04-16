@@ -1,0 +1,14 @@
+<%- include("partials/head") %>
+<section class="container bg-dark text border border-light mt-3 p-2">
+    <a href="/todos" class="btn btn-outline-light">Back</a>
+    <h5 class="mt-2"><%=todo.text%></h5>
+    <h6>Created on: <%=todo.dateCreated%></h6>
+    <% if (todo.dateUpdated) { %>
+    <h6>Last Updated on: <%=todo.dateUpdated%></h6>
+    <% } %>
+    <div class="">
+        <a href="" class="btn btn-outline-light">Edit</a>
+        <a href="" class="btn btn-outline-light">Delete</a>
+    </div>
+</section>
+<%- include("partials/foot") %>
