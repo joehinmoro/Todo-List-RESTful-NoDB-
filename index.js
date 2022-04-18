@@ -73,6 +73,21 @@ app.get("/todos/:_id", (req, res) => {
     }
 });
 
+// edit route (get)
+app.get("/todos/:_id/edit", (req, res) => {
+    // destruct id from req params
+    const { _id } = req.params;
+    // query todo obj using _id
+    const todo = todoDB.find((todoObj) => todoObj._id === _id);
+    if (todo) {
+        // render show view if _id is valid
+        res.render("todos/edit", { title: todo.text, todo });
+    } else {
+        // render 404 page if _id is invalid
+        res.send("404 not found");
+    }
+});
+
 // start server and listen on port
 const portNumber = 8080;
 app.listen(portNumber, () => {
