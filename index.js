@@ -36,16 +36,39 @@ app.get("/todos", (req, res) => {
     res.render("todos/index", { title: "All ToDos", todoDB });
 });
 
+// new route (get)
+app.get("/todos/new", (req, res) => {
+    // render the new todo view
+    res.render("todos/new", { title: "New Todo" });
+});
+
+// create route (post)
+app.post("/todos", (req, res) => {
+    try {
+        // destruct new todo text from req body
+        const { text } = req.body;
+        // define new todo obj
+        const newTodoObj = { _id: randomUUID(), text, dateCreated: new Date(), dateUpdated: "" };
+        // push new todo obj to todoDB arr
+        todoDB.push(newTodoObj);
+        res.redirect("/todos");
+    } catch (error) {
+        res.send("something went wrong");
+    }
+});
+
 // show route (get)
 app.get("/todos/:_id", (req, res) => {
     // destruct id from url
     const { _id } = req.params;
     // validate id
     const todo = todoDB.find((todoObj) => todoObj._id === _id);
-    console.log(todo);
+    // console.log(todo);
     if (todo) {
+        // render show view if _id is valid
         res.render("todos/show", { title: todo.text, todo });
     } else {
+        // render 404 page if _id is invalid
         res.send("404 not found");
     }
 });
