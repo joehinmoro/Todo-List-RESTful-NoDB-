@@ -117,6 +117,28 @@ app.put("/todos/:_id", (req, res) => {
     }
 });
 
+// delete route (delete)
+app.delete("/todos/:_id", (req, res) => {
+    try {
+        // destuct todo id
+        const { delBtn } = req.body;
+        const { _id: todoId } = req.params;
+        // check if delete request was made legally
+        if (delBtn === "delBtn") {
+            // find todo to be deleted and backup
+            const todo = todoDB.find(({ _id }) => _id === todoId);
+            deletedtodoDB.push(todo);
+            // filter out todo to be deleted
+            const newTodoDB = todoDB.filter(({ _id }) => _id !== todoId);
+            todoDB = newTodoDB;
+            console.log(deletedtodoDB);
+            res.redirect("/todos");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 // start server and listen on port
 const portNumber = 3000;
 app.listen(portNumber, () => {
@@ -124,7 +146,7 @@ app.listen(portNumber, () => {
     // console.log(randomUUID());
 });
 
-const todoDB = [
+let todoDB = [
     {
         _id: randomUUID(),
         text: "Hello World",
