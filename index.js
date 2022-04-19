@@ -53,7 +53,7 @@ app.post("/todos", (req, res) => {
         todoDB.push(newTodoObj);
         res.redirect("/todos");
     } catch (error) {
-        res.send("something went wrong");
+        res.send(`something went wrong<br><a href="/">home</a>`);
     }
 });
 
@@ -69,27 +69,56 @@ app.get("/todos/:_id", (req, res) => {
         res.render("todos/show", { title: todo.text, todo });
     } else {
         // render 404 page if _id is invalid
-        res.send("404 not found");
+        res.send(`something went wrong<br><a href="/">home</a>`);
     }
 });
 
 // edit route (get)
 app.get("/todos/:_id/edit", (req, res) => {
-    // destruct id from req params
-    const { _id } = req.params;
-    // query todo obj using _id
-    const todo = todoDB.find((todoObj) => todoObj._id === _id);
-    if (todo) {
-        // render show view if _id is valid
-        res.render("todos/edit", { title: todo.text, todo });
-    } else {
-        // render 404 page if _id is invalid
-        res.send("404 not found");
+    try {
+        // destruct id from req params
+        const { _id } = req.params;
+        // query todo obj using _id
+        const todo = todoDB.find((todoObj) => todoObj._id === _id);
+        if (todo) {
+            // render show view if _id is valid
+            res.render("todos/edit", { title: todo.text, todo });
+        } else {
+            // render 404 page if _id is invalid
+            res.send(`something went wrong<br><a href="/">home</a>`);
+        }
+    } catch (error) {
+        console.log(error);
+        res.send(`something went wrong<br><a href="/">home</a>`);
+    }
+});
+
+// update route (put)
+app.put("/todos/:_id", (req, res) => {
+    try {
+        const { text: newText } = req.body;
+        // destruct id from req params
+        const { _id } = req.params;
+        // query todo obj using _id
+        const todo = todoDB.find((todoObj) => todoObj._id === _id);
+        if (todo) {
+            // update todo text and last updated timestamp
+            todo.text = newText;
+            todo.dateUpdated = new Date();
+            // redirect to index
+            res.redirect("/todos");
+        } else {
+            // render 404 page if _id is invalid
+            res.send(`something went wrong<br><a href="/">home</a>`);
+        }
+    } catch (error) {
+        console.log(error);
+        res.send(`something went wrong<br><a href="/">home</a>`);
     }
 });
 
 // start server and listen on port
-const portNumber = 8080;
+const portNumber = 3000;
 app.listen(portNumber, () => {
     console.log(`listening on port ${portNumber}`);
     // console.log(randomUUID());
