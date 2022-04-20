@@ -150,12 +150,14 @@ let todoDB = [
     {
         _id: randomUUID(),
         text: "Hello World",
+        completed: true,
         dateCreated: new Date(1649923181674),
         dateUpdated: new Date(1649923191974),
     },
     {
         _id: randomUUID(),
         text: "Lorem Ipsum",
+        completed: false,
         dateCreated: new Date(1649923181674),
         dateUpdated: "",
     },

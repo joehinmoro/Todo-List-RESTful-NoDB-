@@ -9,7 +9,11 @@
                     <div class="row">
                         <div class="col-auto me-auto"><p><%= todo.text %></p></div>
                         <div class="col-auto"><a href="/todos/<%=todo._id%>" class="btn btn-outline-light">Info</a></div>
-                        <div class="col-auto"><a href="#" class="btn btn-outline-light">Done</a></div>
+                        <div class="col-auto">
+                            <form action="/todos/<%=todo._id%>?done=<%=!(todo.completed)%>&_method=patch" method="post">
+                                <button class="btn btn-outline-light">Done</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
