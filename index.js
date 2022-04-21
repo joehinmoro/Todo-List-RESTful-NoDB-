@@ -111,8 +111,8 @@ app.put("/todos/:_id", (req, res) => {
                 // set todo completed status
                 todo.isCompleted = !todo.isCompleted;
                 const { location } = req.query;
-                if (location === "show") {
-                    res.redirect(`/todos/${_id}`);
+                if (location === "index") {
+                    res.redirect("/todos");
                 }
             } else {
                 // else, request is to update todo text
@@ -123,7 +123,7 @@ app.put("/todos/:_id", (req, res) => {
                 todo.dateUpdated = new Date();
             }
             // redirect to index
-            res.redirect("/todos");
+            res.redirect(`/todos/${_id}`);
         } else {
             // render 404 page if _id is invalid
             res.send(`something went wrong<br><a href="/">home</a>`);
