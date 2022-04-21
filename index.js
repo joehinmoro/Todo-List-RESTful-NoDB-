@@ -48,7 +48,7 @@ app.post("/todos", (req, res) => {
         // destruct new todo text from req body
         const { text } = req.body;
         // define new todo obj
-        const newTodoObj = { _id: randomUUID(), text, dateCreated: new Date(), dateUpdated: "" };
+        const newTodoObj = { _id: randomUUID(), text, dateCreated: new Date(), dateUpdated: "", isCompleted: false };
         // push new todo obj to todoDB arr
         todoDB.push(newTodoObj);
         res.redirect("/todos");
@@ -96,15 +96,32 @@ app.get("/todos/:_id/edit", (req, res) => {
 // update route (put)
 app.put("/todos/:_id", (req, res) => {
     try {
-        const { text: newText } = req.body;
         // destruct id from req params
         const { _id } = req.params;
         // query todo obj using _id
         const todo = todoDB.find((todoObj) => todoObj._id === _id);
+        // destruct done status boolean from req query
+        const { done } = req.query;
+
+        // if id is valid
         if (todo) {
-            // update todo text and last updated timestamp
-            todo.text = newText;
-            todo.dateUpdated = new Date();
+            // if the request is for the completed status
+            if (done) {
+                console.log(done);
+                // set todo completed status
+                todo.isCompleted = !todo.isCompleted;
+                const { location } = req.query;
+                if (location === "show") {
+                    res.redirect(`/todos/${_id}`);
+                }
+            } else {
+                // else, request is to update todo text
+                // destruct new text from req body
+                const { text: newText } = req.body;
+                // update todo text and last updated timestamp
+                todo.text = newText;
+                todo.dateUpdated = new Date();
+            }
             // redirect to index
             res.redirect("/todos");
         } else {
@@ -116,6 +133,8 @@ app.put("/todos/:_id", (req, res) => {
         res.send(`something went wrong<br><a href="/">home</a>`);
     }
 });
+
+// update
 
 // delete route (delete)
 app.delete("/todos/:_id", (req, res) => {
@@ -150,14 +169,14 @@ let todoDB = [
     {
         _id: randomUUID(),
         text: "Hello World",
-        completed: true,
+        isCompleted: true,
         dateCreated: new Date(1649923181674),
         dateUpdated: new Date(1649923191974),
     },
     {
         _id: randomUUID(),
         text: "Lorem Ipsum",
-        completed: false,
+        isCompleted: false,
         dateCreated: new Date(1649923181674),
         dateUpdated: "",
     },
